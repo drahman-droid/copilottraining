@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microsoft Copilot Training Program</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f3f2f1;
+    min-height: 100vh;
+    padding: 2rem;
+    color: #323130;
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  }
+
+  /* Header */
+  .header {
+    background: #0078D4;
+    padding: 2rem 2.5rem 1.75rem;
+  }
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.6rem;
+  }
+  .header-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.3px;
+  }
+  .header p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.82);
+  }
+
+  /* Sub-header bar */
+  .subbar {
+    background: #005A9E;
+    padding: 0.65rem 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    flex-wrap: wrap;
+  }
+  .subbar span {
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .subbar svg { flex-shrink: 0; }
+
+  /* Body */
+  .body {
+    padding: 1.75rem 2.5rem 2.5rem;
+  }
+
+  /* Instructions banner */
+  .instructions {
+    background: #f0f6ff;
+    border-left: 4px solid #0078D4;
+    border-radius: 0 6px 6px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+  .instructions .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #005A9E;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.65rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .instructions p {
+    font-size: 14px;
+    color: #323130;
+    line-height: 1.65;
+    margin-bottom: 0.6rem;
+  }
+  .instructions ul {
+    font-size: 14px;
+    color: #323130;
+    padding-left: 1.25rem;
+    line-height: 1.85;
+  }
+
+  /* Week cards */
+  .weeks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .week-card {
+    border: 1px solid #edebe9;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .week-card .card-header {
+    padding: 1rem 1.25rem 0.9rem;
+  }
+  .week-card .card-header .week-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.78);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-bottom: 0.3rem;
+  }
+  .week-card .card-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+  }
+  .week-card .card-body {
+    padding: 1.1rem 1.25rem 1.25rem;
+    background: white;
+  }
+  .week-card .card-body p {
+    font-size: 13px;
+    color: #605e5c;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    min-height: 56px;
+  }
+  .week-card .time-badge {
+    font-size: 12px;
+    color: #605e5c;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 0.9rem;
+  }
+  .week-card .btn {
+    display: block;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    padding: 0.55rem 1rem;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .week-card .signin-note {
+    font-size: 11px;
+    color: #a19f9d;
+    text-align: center;
+  }
+
+  /* Bottom grid */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .info-card {
+    border: 1px solid #edebe9;
+    border-radius: 8px;
+    padding: 1.25rem;
+    background: white;
+  }
+  .info-card .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #605e5c;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .info-card ol, .info-card ul {
+    font-size: 13px;
+    color: #323130;
+    padding-left: 1.3rem;
+    line-height: 1.95;
+  }
+  .info-card strong { font-weight: 600; }
+
+  /* Sign-in reminder */
+  .signin-reminder {
+    background: #f3f2f1;
+    border-radius: 6px;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .signin-reminder svg { flex-shrink: 0; margin-top: 1px; }
+  .signin-reminder p {
+    font-size: 13px;
+    color: #605e5c;
+    line-height: 1.6;
+  }
+  .signin-reminder strong { color: #323130; font-weight: 600; }
+
+  /* Icon SVGs inline */
+  .icon { display: inline-block; vertical-align: -3px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-meta">
+      <div class="header-icon">✦</div>
+      <span class="header-label">Microsoft 365 Learning</span>
+    </div>
+    <h1>Copilot Training Program</h1>
+    <p>Complete all three modules over the next three weeks &nbsp;·&nbsp; ~30 mins per week</p>
+  </div>
+
+  <!-- Subbar -->
+  <div class="subbar">
+    <span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      3-week program
+    </span>
+    <span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      ~30 mins per session
+    </span>
+    <span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+      Microsoft Learning Centre
+    </span>
+  </div>
+
+  <div class="body">
+
+    <!-- Instructions -->
+    <div class="instructions">
+      <div class="label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#005A9E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Program Instructions
+      </div>
+      <p>All staff are required to complete <strong>one training module per week</strong> over the next three consecutive weeks using the Microsoft Learning Centre. Each module takes approximately 30 minutes.</p>
+      <ul>
+        <li>Click the relevant week button below to access your training module.</li>
+        <li>You will be redirected to the <strong>Microsoft Learning Centre</strong> — sign in with your Microsoft work account before starting.</li>
+        <li>Complete the module in full (approx. 30 minutes).</li>
+        <li>At your <strong>weekly performance meeting</strong>, demonstrate completion to your manager.</li>
+        <li>Managers must verify that their team members have completed each weekly module.</li>
+      </ul>
+    </div>
+
+    <!-- Week Cards -->
+    <div class="weeks">
+
+      <div class="week-card">
+        <div class="card-header" style="background:#0078D4;">
+          <div class="week-label">Week 1</div>
+          <h3>Copilot Foundations</h3>
+        </div>
+        <div class="card-body">
+          <p>Introduction to Microsoft Copilot — what it is, how it works, and core use cases across Microsoft 365.</p>
+          <div class="time-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ~30 mins
+          </div>
+          <a href="https://learn.microsoft.com/en-us/training/modules/introduction-microsoft-365-copilot/" class="btn" style="background:#0078D4;">Start Week 1 &nbsp;↗</a>
+          <p class="signin-note">Sign in with your work account</p>
+        </div>
+      </div>
+
+      <div class="week-card">
+        <div class="card-header" style="background:#005A9E;">
+          <div class="week-label">Week 2</div>
+          <h3>Copilot in Action</h3>
+        </div>
+        <div class="card-body">
+          <p>Explore the possibilities of Microsoft 365 Copilot — discover how it enhances productivity across everyday tasks and workflows.</p>
+          <div class="time-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ~30 mins
+          </div>
+          <a href="https://learn.microsoft.com/en-us/training/modules/explore-possibilities-microsoft-365-copilot/" class="btn" style="background:#005A9E;">Start Week 2 &nbsp;↗</a>
+          <p class="signin-note">Sign in with your work account</p>
+        </div>
+      </div>
+
+      <div class="week-card">
+        <div class="card-header" style="background:#004578;">
+          <div class="week-label">Week 3</div>
+          <h3>AI for Everyday Tasks</h3>
+        </div>
+        <div class="card-body">
+          <p>Learn how to use AI tools for everyday workplace tasks — practical techniques to save time and work smarter.</p>
+          <div class="time-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ~30 mins
+          </div>
+          <a href="https://learn.microsoft.com/en-us/training/modules/use-ai-everyday-tasks/" class="btn" style="background:#004578;">Start Week 3 &nbsp;↗</a>
+          <p class="signin-note">Sign in with your work account</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom info cards -->
+    <div class="bottom-grid">
+
+      <div class="info-card">
+        <div class="card-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#605e5c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+          How to show proof of completion
+        </div>
+        <ol>
+          <li>Go to <strong>Microsoft Learning Centre</strong></li>
+          <li>Click your <strong>account icon</strong> (top right corner)</li>
+          <li>Select <strong>Profile</strong></li>
+          <li>Click <strong>Training</strong></li>
+          <li>Show your manager the completed module</li>
+        </ol>
+      </div>
+
+      <div class="info-card">
+        <div class="card-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#605e5c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          Manager responsibilities
+        </div>
+        <ul>
+          <li>Ensure all direct reports complete their module each week.</li>
+          <li>Review proof of completion at <strong>weekly performance meetings</strong>.</li>
+          <li>Escalate any non-completion concerns to your HR business partner.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Sign-in reminder -->
+    <div class="signin-reminder">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#605e5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <p><strong>Sign-in reminder:</strong> When you click a week button above, you will be redirected to the Microsoft Learning Centre. Please sign in using your <strong>Microsoft work account</strong> before beginning the module. Do not use a personal Microsoft account.</p>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
